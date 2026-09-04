@@ -5,6 +5,19 @@ import { AdminUser, DEFAULT_PERMISSIONS, IAdminUser } from '../models/AdminUser.
 export const SUPER_ADMIN_EMAIL = 'admin@60frameworks.com';
 export const SUPER_ADMIN_DEFAULT_PASSWORD = 'admin60fw2024!';
 
+export const normalizeUserPermissions = (perms: any, role: string) => {
+  const fallback = DEFAULT_PERMISSIONS[role] || DEFAULT_PERMISSIONS.editor;
+  if (!perms) return fallback;
+  if (!perms.modules) {
+    return {
+      ...fallback,
+      pages: perms.pages || fallback.pages,
+      actions: perms.actions || fallback.actions,
+    };
+  }
+  return perms;
+};
+
 let inMemoryUsers: any[] = [
   {
     _id: 'super_admin_root',
@@ -35,13 +48,24 @@ export const getUsers = async (_req: Request, res: Response): Promise<void> => {
       }
     }
 
+    const normalizedUsers = (users || []).map((u: any) => {
+      const doc = u.toObject ? u.toObject() : u;
+      return {
+        ...doc,
+        permissions: normalizeUserPermissions(doc.permissions, doc.role),
+      };
+    });
+
     res.status(200).json({
       success: true,
-      data: users,
+      data: normalizedUsers,
     });
   } catch (error) {
     console.warn('Error fetching users from DB, returning in-memory users:', error);
-    const safe = inMemoryUsers.map(({ passwordHash, ...rest }) => rest);
+    const safe = inMemoryUsers.map(({ passwordHash, ...rest }) => ({
+      ...rest,
+      permissions: normalizeUserPermissions(rest.permissions, rest.role),
+    }));
     res.status(200).json({
       success: true,
       data: safe,
@@ -254,7 +278,7 @@ export const loginAdmin = async (req: Request, res: Response): Promise<void> => 
         email: user.email,
         role: user.role,
         isSuperAdmin: !!user.isSuperAdmin,
-        permissions: user.permissions || DEFAULT_PERMISSIONS[user.role] || DEFAULT_PERMISSIONS.editor,
+        permissions: normalizeUserPermissions(user.permissions, user.role),
       },
     });
   } catch (error: any) {
