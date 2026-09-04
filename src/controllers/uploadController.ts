@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { put } from '@vercel/blob';
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { config } from '../config/environment.js';
 
+/**
+ * Direct server-side upload fallback for small files
+ */
 export const uploadMedia = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { filename, fileData, contentType } = req.body;
@@ -48,5 +52,45 @@ export const uploadMedia = async (req: Request, res: Response, next: NextFunctio
       success: false,
       message: error.message || 'Failed to upload media to blob storage',
     });
+  }
+};
+
+/**
+ * Handle Vercel Blob client-side upload token handshake
+ * Allows the browser to upload large videos (up to 500MB) directly to Vercel Blob CDN
+ * completely bypassing serverless 4.5MB payload limits.
+ */
+export const handleBlobClientUpload = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const jsonResponse = await handleUpload({
+      body: req.body as HandleUploadBody,
+      request: req,
+      token: config.blob.token,
+      onBeforeGenerateToken: async () => {
+        return {
+          allowedContentTypes: [
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/gif',
+            'image/svg+xml',
+            'video/mp4',
+            'video/webm',
+            'video/quicktime',
+            'video/x-matroska',
+            'video/mpeg',
+          ],
+          tokenPayload: JSON.stringify({}),
+        };
+      },
+      onUploadCompleted: async ({ blob }) => {
+        console.log('[Vercel Blob Client Upload Complete]:', blob.url);
+      },
+    });
+
+    res.status(200).json(jsonResponse);
+  } catch (error: any) {
+    console.error('HandleBlobClientUpload error:', error);
+    res.status(400).json({ error: error.message || 'Client upload token handshake failed' });
   }
 };
