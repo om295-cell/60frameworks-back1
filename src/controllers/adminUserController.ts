@@ -123,6 +123,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
           role: dbUser.role,
           isSuperAdmin: dbUser.isSuperAdmin,
           permissions: dbUser.permissions,
+          registeredDeviceId: dbUser.registeredDeviceId || '',
+          deviceLockEnabled: dbUser.deviceLockEnabled !== false,
         },
         message: 'User created successfully',
       });
@@ -171,7 +173,11 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
     }
 
     try {
-      const dbUser = await AdminUser.findById(id);
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+      const dbUser = isObjectId
+        ? await AdminUser.findById(id)
+        : await AdminUser.findOne({ $or: [{ _id: id }, { email: id.toLowerCase().trim() }] });
+
       if (dbUser) {
         if (dbUser.isSuperAdmin && role && role !== 'superadmin') {
           res.status(403).json({ success: false, message: 'Cannot demote the Super Admin account' });
@@ -218,12 +224,18 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     inMemoryUsers = inMemoryUsers.filter(u => u._id !== id && u.email !== id);
 
     try {
-      const dbUser = await AdminUser.findById(id);
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+      const dbUser = isObjectId
+        ? await AdminUser.findById(id)
+        : await AdminUser.findOne({ $or: [{ _id: id }, { email: id.toLowerCase().trim() }] });
+
       if (dbUser?.isSuperAdmin || dbUser?.isLocked) {
         res.status(403).json({ success: false, message: 'Cannot delete Super Admin' });
         return;
       }
-      await AdminUser.findByIdAndDelete(id);
+      if (dbUser) {
+        await AdminUser.findByIdAndDelete(dbUser._id);
+      }
     } catch {}
 
     res.status(200).json({
@@ -257,49 +269,107 @@ export const loginAdmin = async (req: Request, res: Response): Promise<void> => 
     }
 
     const cleanEmail = email ? email.toLowerCase().trim() : '';
+    const incomingDevice = (deviceId || '').trim().toUpperCase();
 
-    // Helper: enforce device lock for a matched user
-    const checkAndRegisterDevice = async (
-      user: any,
-      saveCallback?: () => Promise<void>
-    ): Promise<{ allowed: boolean; blocked?: boolean }> => {
-      // Superadmin and users with deviceLockEnabled=false are always allowed
+    // Helper: validate and lock device
+    const evaluateDevice = (user: any): { allowed: boolean; isFirstLogin: boolean; registeredDevice?: string } => {
+      // Superadmin and accounts with deviceLockEnabled: false are exempt
       if (user.isSuperAdmin || user.deviceLockEnabled === false) {
-        return { allowed: true };
+        return { allowed: true, isFirstLogin: false };
       }
 
-      const incomingDevice = (deviceId || '').trim();
+      const registered = (user.registeredDeviceId || '').trim().toUpperCase();
 
-      // No device registered yet → register this one (first login)
-      if (!user.registeredDeviceId) {
-        user.registeredDeviceId = incomingDevice;
-        if (saveCallback) await saveCallback();
-        return { allowed: true };
+      // First device login: no device registered yet
+      if (!registered) {
+        return { allowed: true, isFirstLogin: true };
       }
 
-      // Device matches registered device → allow
-      if (user.registeredDeviceId === incomingDevice) {
-        return { allowed: true };
+      // Existing device matches
+      if (incomingDevice && registered === incomingDevice) {
+        return { allowed: true, isFirstLogin: false };
       }
 
-      // Device mismatch → reject
-      return { allowed: false, blocked: true };
+      // Device mismatch: rejected
+      return { allowed: false, isFirstLogin: false, registeredDevice: registered };
     };
 
-    // ── Search in Memory ──
-    let user = inMemoryUsers.find(
+    // ── 1. Check MongoDB First (Primary Persistent Store) ──
+    try {
+      const dbUser = await AdminUser.findOne({ email: cleanEmail });
+      if (dbUser && dbUser.passwordHash === password) {
+        const check = evaluateDevice(dbUser);
+
+        if (!check.allowed) {
+          res.status(403).json({
+            success: false,
+            message: `Access denied: Please log in from your registered device (${check.registeredDevice}).`,
+            deviceBlocked: true,
+            registeredDeviceId: check.registeredDevice,
+          });
+          return;
+        }
+
+        // If first login, register the incoming device ID permanently in MongoDB
+        if (check.isFirstLogin && incomingDevice) {
+          dbUser.registeredDeviceId = incomingDevice;
+        }
+        dbUser.lastLoginAt = new Date();
+        await dbUser.save();
+
+        // Keep in-memory cache in sync
+        const memIdx = inMemoryUsers.findIndex(u => u.email === cleanEmail);
+        if (memIdx !== -1) {
+          inMemoryUsers[memIdx].registeredDeviceId = dbUser.registeredDeviceId;
+          inMemoryUsers[memIdx].lastLoginAt = dbUser.lastLoginAt;
+        }
+
+        res.status(200).json({
+          success: true,
+          data: {
+            _id: dbUser._id,
+            name: dbUser.name,
+            email: dbUser.email,
+            role: dbUser.role,
+            isSuperAdmin: !!dbUser.isSuperAdmin,
+            permissions: normalizeUserPermissions(dbUser.permissions, dbUser.role),
+            registeredDeviceId: dbUser.registeredDeviceId || '',
+            deviceLockEnabled: dbUser.deviceLockEnabled !== false,
+          },
+        });
+        return;
+      }
+    } catch (dbErr) {
+      console.warn('MongoDB login check error, falling back to in-memory:', dbErr);
+    }
+
+    // ── 2. Fallback to In-Memory Users ──
+    const user = inMemoryUsers.find(
       u => u.email === cleanEmail && u.passwordHash === password
     );
 
     if (user) {
-      const deviceCheck = await checkAndRegisterDevice(user);
-      if (!deviceCheck.allowed) {
+      const check = evaluateDevice(user);
+
+      if (!check.allowed) {
         res.status(403).json({
           success: false,
-          message: 'Access denied: Please log in from your registered device.',
+          message: `Access denied: Please log in from your registered device (${check.registeredDevice}).`,
           deviceBlocked: true,
+          registeredDeviceId: check.registeredDevice,
         });
         return;
+      }
+
+      if (check.isFirstLogin && incomingDevice) {
+        user.registeredDeviceId = incomingDevice;
+        // Attempt to update DB if connected
+        try {
+          await AdminUser.findOneAndUpdate(
+            { email: cleanEmail },
+            { registeredDeviceId: incomingDevice, lastLoginAt: new Date() }
+          );
+        } catch {}
       }
 
       res.status(200).json({
@@ -317,43 +387,6 @@ export const loginAdmin = async (req: Request, res: Response): Promise<void> => 
       });
       return;
     }
-
-    // ── Search in DB if not matched in memory ──
-    try {
-      const dbUser = await AdminUser.findOne({ email: cleanEmail });
-      if (dbUser && dbUser.passwordHash === password) {
-        const deviceCheck = await checkAndRegisterDevice(dbUser, async () => {
-          await dbUser.save();
-        });
-
-        if (!deviceCheck.allowed) {
-          res.status(403).json({
-            success: false,
-            message: 'Access denied: Please log in from your registered device.',
-            deviceBlocked: true,
-          });
-          return;
-        }
-
-        dbUser.lastLoginAt = new Date();
-        await dbUser.save();
-
-        res.status(200).json({
-          success: true,
-          data: {
-            _id: dbUser._id,
-            name: dbUser.name,
-            email: dbUser.email,
-            role: dbUser.role,
-            isSuperAdmin: !!dbUser.isSuperAdmin,
-            permissions: normalizeUserPermissions(dbUser.permissions, dbUser.role),
-            registeredDeviceId: dbUser.registeredDeviceId || '',
-            deviceLockEnabled: dbUser.deviceLockEnabled !== false,
-          },
-        });
-        return;
-      }
-    } catch {}
 
     res.status(401).json({ success: false, message: 'Invalid credentials. Access denied.' });
   } catch (error: any) {
