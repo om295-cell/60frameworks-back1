@@ -78,7 +78,8 @@ export interface IUserPermissions {
   actions?: Record<string, boolean>;
 }
 
-export interface IAdminUser extends Document {
+export interface IAdminUser extends Document<string> {
+  _id: string;
   name: string;
   email: string;
   passwordHash: string;
@@ -210,6 +211,7 @@ export const DEFAULT_PERMISSIONS: Record<string, IUserPermissions> = {
 
 const AdminUserSchema = new Schema<IAdminUser>(
   {
+    _id: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },

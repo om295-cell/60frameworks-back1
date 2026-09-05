@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface IAuditLog extends Document {
+export interface IAuditLog extends Document<any> {
+  _id: any;
   userEmail: string;
   userName: string;
   userRole: string;
@@ -14,6 +15,7 @@ export interface IAuditLog extends Document {
 
 const AuditLogSchema = new Schema<IAuditLog>(
   {
+    _id: { type: String },
     userEmail: { type: String, required: true },
     userName: { type: String, default: 'Admin' },
     userRole: { type: String, default: 'admin' },

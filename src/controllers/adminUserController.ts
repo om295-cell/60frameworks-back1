@@ -58,6 +58,11 @@ export const getUsers = async (_req: Request, res: Response): Promise<void> => {
       };
     });
 
+    // Keep inMemoryUsers cache synchronized with the database
+    if (users && users.length > 0) {
+      inMemoryUsers = (users || []).map((u: any) => (u.toObject ? u.toObject() : u));
+    }
+
     res.status(200).json({
       success: true,
       data: normalizedUsers,
@@ -86,8 +91,16 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
     const cleanEmail = email.toLowerCase().trim();
 
-    // Check duplicate
-    if (inMemoryUsers.some(u => u.email === cleanEmail)) {
+    // Check duplicate in memory or DB
+    let isDuplicate = inMemoryUsers.some(u => u.email === cleanEmail);
+    if (!isDuplicate) {
+      try {
+        const existingDb = await AdminUser.findOne({ email: cleanEmail });
+        if (existingDb) isDuplicate = true;
+      } catch {}
+    }
+
+    if (isDuplicate) {
       res.status(400).json({ success: false, message: 'User with this email already exists' });
       return;
     }
@@ -129,7 +142,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         message: 'User created successfully',
       });
       return;
-    } catch {
+    } catch (dbErr: any) {
+      console.warn('Failed to persist user in MongoDB, falling back to in-memory:', dbErr);
       const { passwordHash, ...safe } = newUserObj;
       res.status(201).json({
         success: true,
@@ -191,10 +205,18 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         // Reset device fingerprint if requested
         if (req.body.resetDevice) dbUser.registeredDeviceId = '';
         await dbUser.save();
+
+        const memIdx = inMemoryUsers.findIndex(u => u._id === dbUser._id || u.email === dbUser.email);
+        const fresh = dbUser.toObject ? dbUser.toObject() : dbUser;
+        if (memIdx !== -1) {
+          inMemoryUsers[memIdx] = fresh;
+        } else {
+          inMemoryUsers.push(fresh);
+        }
       }
     } catch {}
 
-    const updated = inMemoryUsers[userIndex] || { _id: id, name, email, role, permissions };
+    const updated = inMemoryUsers.find(u => u._id === id || u.email === id) || { _id: id, name, email, role, permissions };
     const { passwordHash, ...safe } = updated;
 
     res.status(200).json({
