@@ -38,15 +38,15 @@ let inMemoryUsers: any[] = [
 export const getUsers = async (_req: Request, res: Response): Promise<void> => {
   try {
     let users: any = await AdminUser.find().select('-passwordHash');
-    if (!users || users.length === 0) {
-      // Ensure super admin exists in DB
+
+    // Ensure super admin exists in DB and returned list
+    const hasSuperAdmin = users && users.some((u: any) => u.email === SUPER_ADMIN_EMAIL || u.isSuperAdmin);
+    if (!hasSuperAdmin) {
       try {
-        await AdminUser.create(inMemoryUsers[0]);
-        users = await AdminUser.find().select('-passwordHash');
+        const rootAdmin = await AdminUser.create(inMemoryUsers[0]);
+        users = [rootAdmin, ...(users || [])];
       } catch {
-        const safe = inMemoryUsers.map(({ passwordHash, ...rest }) => rest);
-        res.status(200).json({ success: true, data: safe });
-        return;
+        users = [inMemoryUsers[0], ...(users || [])];
       }
     }
 
