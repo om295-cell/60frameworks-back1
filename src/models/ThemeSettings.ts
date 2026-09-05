@@ -86,14 +86,15 @@ export const DEFAULT_THEME_SETTINGS = {
   },
   sectionOrder: [
     { id: 'hero', name: 'Hero Banner', name_ar: 'الواجهة الرئيسية', enabled: true, order: 1 },
-    { id: 'about', name: 'About Agency', name_ar: 'عن الوكالة', enabled: true, order: 2 },
-    { id: 'services', name: 'Services & Capabilities', name_ar: 'الخدمات والحلول', enabled: true, order: 3 },
-    { id: 'clients', name: 'Trusted Clients', name_ar: 'عملاؤنا وشركاؤنا', enabled: true, order: 4 },
-    { id: 'sectors', name: 'Industry Sectors', name_ar: 'القطاعات التخصصية', enabled: true, order: 5 },
-    { id: 'caseStudies', name: 'Case Studies / Stories', name_ar: 'أبرز الأعمال والفعاليات', enabled: true, order: 6 },
-    { id: 'whyUs', name: 'Why 60FRAMEWORKS', name_ar: 'لماذا 60 فريمووركس', enabled: true, order: 7 },
-    { id: 'testimonials', name: 'Testimonials & Impact', name_ar: 'آراء وتقييمات القادة', enabled: true, order: 8 },
-    { id: 'finalCta', name: 'Final Call to Action', name_ar: 'دعوة للتواصل والشراكة', enabled: true, order: 9 },
+    { id: 'latestEvent', name: 'Latest Event Spotlight', name_ar: 'فعاليتنا الأخيرة ورابط الدرايف', enabled: true, order: 2 },
+    { id: 'about', name: 'About Agency', name_ar: 'عن الوكالة', enabled: true, order: 3 },
+    { id: 'services', name: 'Services & Capabilities', name_ar: 'الخدمات والحلول', enabled: true, order: 4 },
+    { id: 'clients', name: 'Trusted Clients', name_ar: 'عملاؤنا وشركاؤنا', enabled: true, order: 5 },
+    { id: 'sectors', name: 'Industry Sectors', name_ar: 'القطاعات التخصصية', enabled: true, order: 6 },
+    { id: 'caseStudies', name: 'Case Studies / Stories', name_ar: 'أبرز الأعمال والفعاليات', enabled: true, order: 7 },
+    { id: 'whyUs', name: 'Why 60FRAMEWORKS', name_ar: 'لماذا 60 فريمووركس', enabled: true, order: 8 },
+    { id: 'testimonials', name: 'Testimonials & Impact', name_ar: 'آراء وتقييمات القادة', enabled: true, order: 9 },
+    { id: 'finalCta', name: 'Final Call to Action', name_ar: 'دعوة للتواصل والشراكة', enabled: true, order: 10 },
   ],
 };
 

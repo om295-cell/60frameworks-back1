@@ -68,6 +68,21 @@ let inMemoryContent: any = {
     buttonText_en: 'CONNECT WITH OUR TEAM',
     buttonText_ar: 'تواصل مع فريقنا الاستشاري',
   },
+  latestEvent: {
+    eyebrow_en: 'LATEST EVENT',
+    eyebrow_ar: 'أحدث فعالياتنا',
+    title_en: 'Our Latest Event Experience',
+    title_ar: 'فعاليتنا الأخيرة: تجربة استثنائية',
+    subtitle_en:
+      'Click the image below to view comprehensive coverage, high-definition captures, and documentation directly on Google Drive.',
+    subtitle_ar:
+      'انقر على الصورة للاطلاع على التغطية الشاملة، الصور التوثيقية، وملفات الفعالية مباشرة عبر Google Drive.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
+    driveUrl: 'https://drive.google.com',
+    tag_en: 'Exclusive Event Documentation',
+    tag_ar: 'ملف التوثيق والتغطية الحصرية',
+  },
 };
 
 export const getContent = async (_req: Request, res: Response): Promise<void> => {

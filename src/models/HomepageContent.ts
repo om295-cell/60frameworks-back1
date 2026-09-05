@@ -55,6 +55,18 @@ export interface IHomepageContent extends Document {
     buttonText_en: string;
     buttonText_ar: string;
   };
+  latestEvent?: {
+    eyebrow_en?: string;
+    eyebrow_ar?: string;
+    title_en?: string;
+    title_ar?: string;
+    subtitle_en?: string;
+    subtitle_ar?: string;
+    imageUrl?: string;
+    driveUrl?: string;
+    tag_en?: string;
+    tag_ar?: string;
+  };
   updatedAt: Date;
 }
 
@@ -206,6 +218,30 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       },
       buttonText_en: { type: String, default: 'CONNECT WITH OUR TEAM' },
       buttonText_ar: { type: String, default: 'تواصل مع فريقنا الاستشاري' },
+    },
+    latestEvent: {
+      eyebrow_en: { type: String, default: 'LATEST EVENT' },
+      eyebrow_ar: { type: String, default: 'أحدث فعالياتنا' },
+      title_en: { type: String, default: 'Our Latest Event Experience' },
+      title_ar: { type: String, default: 'فعاليتنا الأخيرة: تجربة استثنائية' },
+      subtitle_en: {
+        type: String,
+        default:
+          'Click the image below to view comprehensive coverage, high-definition captures, and documentation directly on Google Drive.',
+      },
+      subtitle_ar: {
+        type: String,
+        default:
+          'انقر على الصورة للاطلاع على التغطية الشاملة، الصور التوثيقية، وملفات الفعالية مباشرة عبر Google Drive.',
+      },
+      imageUrl: {
+        type: String,
+        default:
+          'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
+      },
+      driveUrl: { type: String, default: 'https://drive.google.com' },
+      tag_en: { type: String, default: 'Exclusive Event Documentation' },
+      tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
     },
   },
   {
