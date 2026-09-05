@@ -28,6 +28,8 @@ let inMemoryUsers: any[] = [
     isSuperAdmin: true,
     isLocked: true,
     permissions: DEFAULT_PERMISSIONS.superadmin,
+    registeredDeviceId: '',   // Superadmin is exempt — never enforced
+    deviceLockEnabled: false, // Superadmin bypass
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -102,6 +104,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
       isSuperAdmin: false,
       isLocked: false,
       permissions: userPermissions,
+      registeredDeviceId: '',  // Will be set on first login
+      deviceLockEnabled: true, // Device lock active by default
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -160,6 +164,8 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         ...(password ? { passwordHash: password } : {}),
         ...(role && !existing?.isSuperAdmin ? { role } : {}),
         ...(permissions ? { permissions } : {}),
+        // Reset device: clears the registered device fingerprint so the next login registers a new one
+        ...(req.body.resetDevice ? { registeredDeviceId: '' } : {}),
         updatedAt: new Date(),
       };
     }
@@ -176,6 +182,8 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
         if (password) dbUser.passwordHash = password;
         if (role && !dbUser.isSuperAdmin) dbUser.role = role;
         if (permissions) dbUser.permissions = permissions;
+        // Reset device fingerprint if requested
+        if (req.body.resetDevice) dbUser.registeredDeviceId = '';
         await dbUser.save();
       }
     } catch {}
@@ -229,9 +237,9 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
 
 export const loginAdmin = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { email, password, deviceId } = req.body;
 
-    // Super Admin Quick Password or Email+Password
+    // Super Admin Quick Password or Email+Password — always exempt from device locking
     if (password === SUPER_ADMIN_DEFAULT_PASSWORD && (!email || email === SUPER_ADMIN_EMAIL)) {
       res.status(200).json({
         success: true,
@@ -241,6 +249,8 @@ export const loginAdmin = async (req: Request, res: Response): Promise<void> => 
           role: 'superadmin',
           isSuperAdmin: true,
           permissions: DEFAULT_PERMISSIONS.superadmin,
+          registeredDeviceId: '',
+          deviceLockEnabled: false,
         },
       });
       return;
@@ -248,39 +258,104 @@ export const loginAdmin = async (req: Request, res: Response): Promise<void> => 
 
     const cleanEmail = email ? email.toLowerCase().trim() : '';
 
-    // Search in Memory
+    // Helper: enforce device lock for a matched user
+    const checkAndRegisterDevice = async (
+      user: any,
+      saveCallback?: () => Promise<void>
+    ): Promise<{ allowed: boolean; blocked?: boolean }> => {
+      // Superadmin and users with deviceLockEnabled=false are always allowed
+      if (user.isSuperAdmin || user.deviceLockEnabled === false) {
+        return { allowed: true };
+      }
+
+      const incomingDevice = (deviceId || '').trim();
+
+      // No device registered yet → register this one (first login)
+      if (!user.registeredDeviceId) {
+        user.registeredDeviceId = incomingDevice;
+        if (saveCallback) await saveCallback();
+        return { allowed: true };
+      }
+
+      // Device matches registered device → allow
+      if (user.registeredDeviceId === incomingDevice) {
+        return { allowed: true };
+      }
+
+      // Device mismatch → reject
+      return { allowed: false, blocked: true };
+    };
+
+    // ── Search in Memory ──
     let user = inMemoryUsers.find(
       u => u.email === cleanEmail && u.passwordHash === password
     );
 
-    // Search in DB if not matched
-    if (!user) {
-      try {
-        const dbUser = await AdminUser.findOne({ email: cleanEmail });
-        if (dbUser && dbUser.passwordHash === password) {
-          user = dbUser;
-          dbUser.lastLoginAt = new Date();
-          await dbUser.save();
-        }
-      } catch {}
-    }
+    if (user) {
+      const deviceCheck = await checkAndRegisterDevice(user);
+      if (!deviceCheck.allowed) {
+        res.status(403).json({
+          success: false,
+          message: 'Access denied: Please log in from your registered device.',
+          deviceBlocked: true,
+        });
+        return;
+      }
 
-    if (!user) {
-      res.status(401).json({ success: false, message: 'Invalid credentials. Access denied.' });
+      res.status(200).json({
+        success: true,
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          isSuperAdmin: !!user.isSuperAdmin,
+          permissions: normalizeUserPermissions(user.permissions, user.role),
+          registeredDeviceId: user.registeredDeviceId || '',
+          deviceLockEnabled: user.deviceLockEnabled !== false,
+        },
+      });
       return;
     }
 
-    res.status(200).json({
-      success: true,
-      data: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        isSuperAdmin: !!user.isSuperAdmin,
-        permissions: normalizeUserPermissions(user.permissions, user.role),
-      },
-    });
+    // ── Search in DB if not matched in memory ──
+    try {
+      const dbUser = await AdminUser.findOne({ email: cleanEmail });
+      if (dbUser && dbUser.passwordHash === password) {
+        const deviceCheck = await checkAndRegisterDevice(dbUser, async () => {
+          await dbUser.save();
+        });
+
+        if (!deviceCheck.allowed) {
+          res.status(403).json({
+            success: false,
+            message: 'Access denied: Please log in from your registered device.',
+            deviceBlocked: true,
+          });
+          return;
+        }
+
+        dbUser.lastLoginAt = new Date();
+        await dbUser.save();
+
+        res.status(200).json({
+          success: true,
+          data: {
+            _id: dbUser._id,
+            name: dbUser.name,
+            email: dbUser.email,
+            role: dbUser.role,
+            isSuperAdmin: !!dbUser.isSuperAdmin,
+            permissions: normalizeUserPermissions(dbUser.permissions, dbUser.role),
+            registeredDeviceId: dbUser.registeredDeviceId || '',
+            deviceLockEnabled: dbUser.deviceLockEnabled !== false,
+          },
+        });
+        return;
+      }
+    } catch {}
+
+    res.status(401).json({ success: false, message: 'Invalid credentials. Access denied.' });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message || 'Login failed' });
   }

@@ -87,6 +87,10 @@ export interface IAdminUser extends Document {
   isLocked: boolean; // Cannot be deleted
   permissions: IUserPermissions;
   lastLoginAt?: Date;
+  /** Fingerprint of the first device used to log in. Empty = not yet registered. */
+  registeredDeviceId?: string;
+  /** When true, login is restricted to the registered device only. Superadmins are always exempt. */
+  deviceLockEnabled: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -221,6 +225,8 @@ const AdminUserSchema = new Schema<IAdminUser>(
       default: () => JSON.parse(JSON.stringify(DEFAULT_PERMISSIONS.editor)),
     },
     lastLoginAt: { type: Date },
+    registeredDeviceId: { type: String, default: '' },
+    deviceLockEnabled: { type: Boolean, default: true },
   },
   {
     timestamps: true,
