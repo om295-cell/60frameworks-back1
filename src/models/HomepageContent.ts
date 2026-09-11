@@ -274,12 +274,12 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       subtitle_ar: { type: String, default: 'من ولادة المفهوم الاستراتيجي إلى الإخراج المباشر المتزامن وتحليلات ما بعد الحدث، تقدم فرقنا المتخصصة تميزاً شاملاً وموثوقاً.' },
     },
     clients: {
-      eyebrow_en: { type: String, default: 'TRUSTED BY INDUSTRY TITANS' },
-      eyebrow_ar: { type: String, default: 'ثقة كبرى الكيانات والرواد' },
-      heading_en: { type: String, default: 'Trusted by Sovereign Entities & Global Enterprises.' },
-      heading_ar: { type: String, default: 'شركاء النجاح للهيئات السيادية والمؤسسات العالمية.' },
-      subtitle_en: { type: String, default: 'We architect experiences for organizations where precision, security, and world-class prestige are non-negotiable.' },
-      subtitle_ar: { type: String, default: 'نصنع الفعاليات للجهات التي تضع الدقة الفائقة والأمان المطلق والهيبة العالمية في صدارة أولوياتها.' },
+      eyebrow_en: { type: String, default: 'OUR PARTNERS' },
+      eyebrow_ar: { type: String, default: 'شركاؤنا' },
+      heading_en: { type: String, default: 'Partners in Success' },
+      heading_ar: { type: String, default: 'شركاء النجاح' },
+      subtitle_en: { type: String, default: 'Trust That Created Impact' },
+      subtitle_ar: { type: String, default: 'ثقة صنعت أثرًا:' },
     },
     sectors: {
       eyebrow_en: { type: String, default: 'INDUSTRY VERTICALS' },

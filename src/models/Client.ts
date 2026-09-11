@@ -4,6 +4,7 @@ export interface IClient extends Document {
   name: string;
   name_ar: string;
   logoSvg: string;
+  logoUrl?: string;
   industry: string;
   industry_ar: string;
   tier: 'featured' | 'enterprise' | 'global';
@@ -18,6 +19,7 @@ const ClientSchema = new Schema<IClient>(
     name: { type: String, required: true, trim: true },
     name_ar: { type: String, default: '', trim: true },
     logoSvg: { type: String, required: true },
+    logoUrl: { type: String, default: '' },
     industry: { type: String, required: true },
     industry_ar: { type: String, default: '' },
     tier: { type: String, enum: ['featured', 'enterprise', 'global'], default: 'enterprise' },
