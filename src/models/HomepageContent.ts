@@ -93,6 +93,25 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
           'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2000&auto=format&fit=crop',
       },
       backdropVideo: { type: String, default: '' },
+      impactTitle_en: { type: String, default: 'Our Impact in Numbers' },
+      impactTitle_ar: { type: String, default: 'أثرنا بالأرقام' },
+      impactSubtitle_en: { type: String, default: 'Because real impact… is measured.' },
+      impactSubtitle_ar: { type: String, default: 'لأن الأثر الحقيقي… يُقاس.' },
+      heroStats: {
+        type: [
+          {
+            value_en: { type: String, default: '+XX' },
+            value_ar: { type: String, default: '+XX' },
+            label_en: { type: String, default: 'Projects & Campaigns' },
+            label_ar: { type: String, default: 'مشروع وحملة' },
+          },
+        ],
+        default: [
+          { value_en: '+XX', value_ar: '+XX', label_en: 'Projects & Campaigns', label_ar: 'مشروع وحملة' },
+          { value_en: '+XXM', value_ar: '+XXM', label_en: 'Views & Reach', label_ar: 'مشاهدة ووصول' },
+          { value_en: '+XX', value_ar: '+XX', label_en: 'Brands & Destinations Trusted Us', label_ar: 'علامة وجهة وثقت بنا' },
+        ],
+      },
     },
     about: {
       eyebrow_en: { type: String, default: 'ABOUT OUR AGENCY' },
@@ -239,6 +258,7 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
         default:
           'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
       },
+      videoUrl: { type: String, default: '' },
       driveUrl: { type: String, default: 'https://drive.google.com' },
       tag_en: { type: String, default: 'Exclusive Event Documentation' },
       tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
