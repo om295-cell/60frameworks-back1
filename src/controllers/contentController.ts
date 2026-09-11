@@ -145,6 +145,11 @@ export const updateContent = async (req: Request, res: Response): Promise<void> 
       ...inMemoryContent,
       hero: mergedHero,
       about: mergedAbout,
+      services: req.body.services ? { ...inMemoryContent.services, ...req.body.services } : inMemoryContent.services,
+      clients: req.body.clients ? { ...inMemoryContent.clients, ...req.body.clients } : inMemoryContent.clients,
+      sectors: req.body.sectors ? { ...inMemoryContent.sectors, ...req.body.sectors } : inMemoryContent.sectors,
+      caseStudies: req.body.caseStudies ? { ...inMemoryContent.caseStudies, ...req.body.caseStudies } : inMemoryContent.caseStudies,
+      testimonials: req.body.testimonials ? { ...inMemoryContent.testimonials, ...req.body.testimonials } : inMemoryContent.testimonials,
       whyUs: { ...inMemoryContent.whyUs, ...req.body.whyUs },
       finalCta: { ...inMemoryContent.finalCta, ...req.body.finalCta },
       latestEvent: {
@@ -157,6 +162,11 @@ export const updateContent = async (req: Request, res: Response): Promise<void> 
     const updateDoc: any = {};
     if (req.body.hero) updateDoc.hero = mergedHero;
     if (req.body.about) updateDoc.about = mergedAbout;
+    if (req.body.services) updateDoc.services = req.body.services;
+    if (req.body.clients) updateDoc.clients = req.body.clients;
+    if (req.body.sectors) updateDoc.sectors = req.body.sectors;
+    if (req.body.caseStudies) updateDoc.caseStudies = req.body.caseStudies;
+    if (req.body.testimonials) updateDoc.testimonials = req.body.testimonials;
     if (req.body.whyUs) updateDoc.whyUs = req.body.whyUs;
     if (req.body.finalCta) updateDoc.finalCta = req.body.finalCta;
     if (req.body.latestEvent) updateDoc.latestEvent = req.body.latestEvent;

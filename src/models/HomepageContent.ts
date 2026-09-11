@@ -55,6 +55,31 @@ export interface IHomepageContent extends Document {
     buttonText_en: string;
     buttonText_ar: string;
   };
+  services?: {
+    eyebrow_en?: string; eyebrow_ar?: string;
+    heading_en?: string; heading_ar?: string;
+    subtitle_en?: string; subtitle_ar?: string;
+  };
+  clients?: {
+    eyebrow_en?: string; eyebrow_ar?: string;
+    heading_en?: string; heading_ar?: string;
+    subtitle_en?: string; subtitle_ar?: string;
+  };
+  sectors?: {
+    eyebrow_en?: string; eyebrow_ar?: string;
+    heading_en?: string; heading_ar?: string;
+    subtitle_en?: string; subtitle_ar?: string;
+  };
+  caseStudies?: {
+    eyebrow_en?: string; eyebrow_ar?: string;
+    heading_en?: string; heading_ar?: string;
+    subtitle_en?: string; subtitle_ar?: string;
+  };
+  testimonials?: {
+    eyebrow_en?: string; eyebrow_ar?: string;
+    heading_en?: string; heading_ar?: string;
+    subtitle_en?: string; subtitle_ar?: string;
+  };
   latestEvent?: {
     eyebrow_en?: string;
     eyebrow_ar?: string;
@@ -239,6 +264,46 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       },
       buttonText_en: { type: String, default: 'CONNECT WITH OUR TEAM' },
       buttonText_ar: { type: String, default: 'تواصل مع فريقنا الاستشاري' },
+    },
+    services: {
+      eyebrow_en: { type: String, default: 'OUR CAPABILITIES' },
+      eyebrow_ar: { type: String, default: 'قدراتنا وإمكاناتنا' },
+      heading_en: { type: String, default: 'Comprehensive Experiential Solutions Engineered to Scale.' },
+      heading_ar: { type: String, default: 'حلول وتجارب متكاملة مصممة لأعلى مستويات التأثير.' },
+      subtitle_en: { type: String, default: 'From strategic concept genesis to synchronized live showrunning and post-event intelligence, our multidisciplinary teams deliver turnkey excellence.' },
+      subtitle_ar: { type: String, default: 'من ولادة المفهوم الاستراتيجي إلى الإخراج المباشر المتزامن وتحليلات ما بعد الحدث، تقدم فرقنا المتخصصة تميزاً شاملاً وموثوقاً.' },
+    },
+    clients: {
+      eyebrow_en: { type: String, default: 'TRUSTED BY INDUSTRY TITANS' },
+      eyebrow_ar: { type: String, default: 'ثقة كبرى الكيانات والرواد' },
+      heading_en: { type: String, default: 'Trusted by Sovereign Entities & Global Enterprises.' },
+      heading_ar: { type: String, default: 'شركاء النجاح للهيئات السيادية والمؤسسات العالمية.' },
+      subtitle_en: { type: String, default: 'We architect experiences for organizations where precision, security, and world-class prestige are non-negotiable.' },
+      subtitle_ar: { type: String, default: 'نصنع الفعاليات للجهات التي تضع الدقة الفائقة والأمان المطلق والهيبة العالمية في صدارة أولوياتها.' },
+    },
+    sectors: {
+      eyebrow_en: { type: String, default: 'INDUSTRY VERTICALS' },
+      eyebrow_ar: { type: String, default: 'القطاعات المتخصصة' },
+      heading_en: { type: String, default: 'Tailored Sector Mastery Across High-Stakes Domains.' },
+      heading_ar: { type: String, default: 'خبرة قطاعية عميقة تواكب متطلبات المجالات الحساسة.' },
+      subtitle_en: { type: String, default: 'Each industry commands specific protocol, visual language, and attendee dynamics. Our vertical-specific teams bring decades of specialized execution.' },
+      subtitle_ar: { type: String, default: 'كل قطاع يتميز ببروتوكوله الخاص، ولغته البصرية، وديناميكية جمهوره. توفر فرقنا المتخصصة عقوداً من الخبرة التنفيذية في المملكة والمنطقة.' },
+    },
+    caseStudies: {
+      eyebrow_en: { type: String, default: 'FEATURED CASE STUDIES & STORIES' },
+      eyebrow_ar: { type: String, default: 'قصص نجاح ودراسات حالة بارزة' },
+      heading_en: { type: String, default: 'Landmark Experiences Crafted on the World Stage.' },
+      heading_ar: { type: String, default: 'فعاليات تاريخية صيغت بإتقان على المسرح العالمي.' },
+      subtitle_en: { type: String, default: 'Explore how we translate high-stakes visions into viral product launches, immersive pavilions, and sovereign summits.' },
+      subtitle_ar: { type: String, default: 'اكتشف كيف نحول الرؤى الطموحة إلى تدشينات منتجات تصنع الزخم، وأجنحة معمارية غامرة، وقمم سيادية ملهمة.' },
+    },
+    testimonials: {
+      eyebrow_en: { type: String, default: 'CLIENT VOICES & IMPACT' },
+      eyebrow_ar: { type: String, default: 'آراء شركاء النجاح وأثرنا' },
+      heading_en: { type: String, default: 'Validated by Global Leaders and Visionaries.' },
+      heading_ar: { type: String, default: 'شهادات نعتز بها من قادة ومسؤولين عالميين.' },
+      subtitle_en: { type: String, default: 'Real outcomes, tangible metric leaps, and transformative experiences reported by the leaders who trust us with their critical milestones.' },
+      subtitle_ar: { type: String, default: 'نتائج واقعية وقفزات قياسية وتجارب استثنائية يرويها القادة الذين ائتمنونا على أهم محطاتهم الاستراتيجية.' },
     },
     latestEvent: {
       eyebrow_en: { type: String, default: 'LATEST EVENT' },
