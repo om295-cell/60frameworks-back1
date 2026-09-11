@@ -35,6 +35,7 @@ export interface IThemeSettings extends Document {
     whyUs: { backgroundColor: string; textColor: string; accentColor: string };
     testimonials: { backgroundColor: string; textColor: string; accentColor: string };
     finalCta: { backgroundColor: string; textColor: string; accentColor: string };
+    latestEvent: { backgroundColor: string; textColor: string; subtitleColor?: string; accentColor: string; cardBackgroundColor?: string; cardTextColor?: string };
   };
   sectionOrder: {
     id: string;
@@ -83,6 +84,7 @@ export const DEFAULT_THEME_SETTINGS = {
     whyUs: { backgroundColor: '#FFFFFF', textColor: '#242424', accentColor: '#F68621' },
     testimonials: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
     finalCta: { backgroundColor: '#F68621', textColor: '#FFFFFF', accentColor: '#FFFFFF' },
+    latestEvent: { backgroundColor: '#FFFFFF', textColor: '#0B0F19', subtitleColor: '#5A6275', accentColor: '#F68621', cardBackgroundColor: '#0A0F1D', cardTextColor: '#FFFFFF' },
   },
   sectionOrder: [
     { id: 'hero', name: 'Hero Banner', name_ar: 'الواجهة الرئيسية', enabled: true, order: 1 },
@@ -134,6 +136,7 @@ const ThemeSettingsSchema = new Schema<IThemeSettings>(
       whyUs: { type: Object, default: DEFAULT_THEME_SETTINGS.sections.whyUs },
       testimonials: { type: Object, default: DEFAULT_THEME_SETTINGS.sections.testimonials },
       finalCta: { type: Object, default: DEFAULT_THEME_SETTINGS.sections.finalCta },
+      latestEvent: { type: Object, default: DEFAULT_THEME_SETTINGS.sections.latestEvent },
     },
     sectionOrder: {
       type: [
