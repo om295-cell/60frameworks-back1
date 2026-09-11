@@ -261,7 +261,7 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
           'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
       },
       videos: { type: [String], default: [] },
-      videosMuted: { type: Boolean, default: true },
+      videosMuted: { type: Boolean, default: false },
       driveUrl: { type: String, default: 'https://drive.google.com' },
       tag_en: { type: String, default: 'Exclusive Event Documentation' },
       tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
