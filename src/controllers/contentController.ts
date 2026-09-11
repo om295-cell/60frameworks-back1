@@ -114,19 +114,29 @@ export const getContent = async (_req: Request, res: Response): Promise<void> =>
 export const updateContent = async (req: Request, res: Response): Promise<void> => {
   try {
     // Update in-memory copy
+    const mergedAbout = req.body.about
+      ? {
+          ...inMemoryContent.about,
+          ...req.body.about,
+          stats: req.body.about.stats ?? inMemoryContent.about.stats,
+        }
+      : inMemoryContent.about;
+
     inMemoryContent = {
       ...inMemoryContent,
       hero: { ...inMemoryContent.hero, ...req.body.hero },
-      about: { ...inMemoryContent.about, ...req.body.about },
+      about: mergedAbout,
       whyUs: { ...inMemoryContent.whyUs, ...req.body.whyUs },
       finalCta: { ...inMemoryContent.finalCta, ...req.body.finalCta },
+      latestEvent: { ...inMemoryContent.latestEvent, ...req.body.latestEvent },
     };
 
     const updateDoc: any = {};
     if (req.body.hero) updateDoc.hero = req.body.hero;
-    if (req.body.about) updateDoc.about = req.body.about;
+    if (req.body.about) updateDoc.about = mergedAbout;
     if (req.body.whyUs) updateDoc.whyUs = req.body.whyUs;
     if (req.body.finalCta) updateDoc.finalCta = req.body.finalCta;
+    if (req.body.latestEvent) updateDoc.latestEvent = req.body.latestEvent;
 
     const content = await HomepageContent.findOneAndUpdate(
       {},
