@@ -88,7 +88,8 @@ let inMemoryContent: any = {
       'انقر على الصورة للاطلاع على التغطية الشاملة، الصور التوثيقية، وملفات الفعالية مباشرة عبر Google Drive.',
     imageUrl:
       'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
-    videoUrl: '',
+    videos: [],
+    videosMuted: true,
     driveUrl: 'https://drive.google.com',
     tag_en: 'Exclusive Event Documentation',
     tag_ar: 'ملف التوثيق والتغطية الحصرية',
@@ -146,7 +147,11 @@ export const updateContent = async (req: Request, res: Response): Promise<void> 
       about: mergedAbout,
       whyUs: { ...inMemoryContent.whyUs, ...req.body.whyUs },
       finalCta: { ...inMemoryContent.finalCta, ...req.body.finalCta },
-      latestEvent: { ...inMemoryContent.latestEvent, ...req.body.latestEvent },
+      latestEvent: {
+        ...inMemoryContent.latestEvent,
+        ...req.body.latestEvent,
+        videos: req.body.latestEvent?.videos ?? inMemoryContent.latestEvent.videos,
+      },
     };
 
     const updateDoc: any = {};

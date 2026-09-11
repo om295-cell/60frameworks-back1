@@ -63,6 +63,8 @@ export interface IHomepageContent extends Document {
     subtitle_en?: string;
     subtitle_ar?: string;
     imageUrl?: string;
+    videos?: string[];
+    videosMuted?: boolean;
     driveUrl?: string;
     tag_en?: string;
     tag_ar?: string;
@@ -258,7 +260,8 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
         default:
           'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
       },
-      videoUrl: { type: String, default: '' },
+      videos: { type: [String], default: [] },
+      videosMuted: { type: Boolean, default: true },
       driveUrl: { type: String, default: 'https://drive.google.com' },
       tag_en: { type: String, default: 'Exclusive Event Documentation' },
       tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
