@@ -449,7 +449,7 @@ export const INITIAL_CLIENTS = [
   { name: 'Lishlazz', name_ar: 'لشلاز', logoSvg: 'Lishlazz', logoUrl: '/partners/lishlazz.png', industry: 'Specialty Dining & Smokehouse', industry_ar: 'المطاعم المتخصصة والشواء', tier: 'featured', order: 33 },
   { name: 'Lawyer Saud Al-Asadi Firm', name_ar: 'مكتب المحامي سعود الأسعدي', logoSvg: 'LawyerAsadi', logoUrl: '/partners/lawyer-saud-al-asadi.png', industry: 'Legal Advisory & Practice', industry_ar: 'المحاماة والاستشارات القانونية', tier: 'featured', order: 34 },
   { name: 'Yalla Hike', name_ar: 'يلا هايك', logoSvg: 'YallaHike', logoUrl: '/partners/yalla-hike.png', industry: 'Eco-Tourism & Adventure', industry_ar: 'السياحة الرياضية والمغامرات', tier: 'featured', order: 35 },
-  { name: 'National Falcon Heritage', name_ar: 'الصقر والشعار الوطني', logoSvg: 'Falcon', logoUrl: '/partners/saudi-heritage-emblem.png', industry: 'National Heritage & Protocol', industry_ar: 'التراث الوطني والبروتوكول السيادي', tier: 'global', order: 36 },
+  { name: 'Ministry of Transport and Logistic Services', name_ar: 'وزارة النقل والخدمات اللوجستية', logoSvg: 'MOT', logoUrl: '/partners/ministry-transport.png', industry: 'Government & Logistics', industry_ar: 'القطاع الحكومي واللوجستي', tier: 'global', order: 36 },
 ];
 
 export const INITIAL_TESTIMONIALS = [
