@@ -8,8 +8,8 @@ export const config = {
   apiPrefix: process.env.API_PREFIX || '/api/v1',
   mongoUri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/creative_agency',
   blob: {
-    storeId: process.env.BLOB_STORE_ID || 'store_L8t8YKc5TFbkEfRg',
-    token: process.env.BLOB_READ_WRITE_TOKEN || 'vercel_blob_rw_L8t8YKc5TFbkEfRg_XL8aMuXzFkcZuhcvbAASe2eoXeRojY',
+    storeId: process.env.BLOB_STORE_ID || 'store_sPiUBsxm2VG65SDM',
+    token: process.env.BLOB_READ_WRITE_TOKEN || 'vercel_blob_rw_sPiUBsxm2VG65SDM_qg4ygQJbf4ESISy9AX3xGFxJTzx1Ia',
   },
   corsOrigins: process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim())
