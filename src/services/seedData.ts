@@ -441,7 +441,7 @@ export const INITIAL_CLIENTS = [
   { name: 'Maki House', name_ar: 'ماكي هاوس', logoSvg: 'MakiHouse', logoUrl: '/partners/maki-house.png', industry: 'Hospitality & Dining', industry_ar: 'الضيافة والمطاعم', tier: 'featured', order: 25 },
   { name: 'Dar Al-Awja', name_ar: 'دار العوجا', logoSvg: 'DarAlAwja', logoUrl: '/partners/dar-al-awja.png', industry: 'Heritage Hospitality & Cafe', industry_ar: 'الضيافة والمطاعم التراثية', tier: 'featured', order: 26 },
   { name: 'Pance', name_ar: 'بانسيه', logoSvg: 'Pance', logoUrl: '/partners/pance.png', industry: 'Floristry & Event Styling', industry_ar: 'تنسيق الزهور والفعاليات الفاخرة', tier: 'featured', order: 27 },
-  { name: 'Sign', name_ar: 'ساين', logoSvg: 'Sign', logoUrl: '/partners/sign.png', industry: 'Lifestyle & Fashion', industry_ar: 'الأزياء ونمط الحياة', tier: 'featured', order: 28 },
+  { name: 'Sign', name_ar: 'ساين', logoSvg: 'Sign', logoUrl: '/partners/sign.png', industry: 'Restaurants & Hospitality', industry_ar: 'المطاعم والضيافة', tier: 'featured', order: 28 },
   { name: 'QMA Fresh', name_ar: 'قمة فريش', logoSvg: 'QMA', logoUrl: '/partners/qma-fresh.png', industry: 'Fresh Foods & Retail', industry_ar: 'المنتجات الطازجة والتجزئة', tier: 'featured', order: 29 },
   { name: 'Vigour Locomotion', name_ar: 'قوة الحركة', logoSvg: 'Vigour', logoUrl: '/partners/vigour-locomotion.png', industry: 'Fitness & Motion Sports', industry_ar: 'اللياقة والصحة البدنية', tier: 'featured', order: 30 },
   { name: 'Rawafed Al-Bilad', name_ar: 'روافد البلاد', logoSvg: 'Rawafed', logoUrl: '/partners/rawafed-al-bilad.png', industry: 'Human Capital Solutions', industry_ar: 'الموارد البشرية والخدمات العمالية', tier: 'featured', order: 31 },
