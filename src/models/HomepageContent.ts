@@ -93,6 +93,8 @@ export interface IHomepageContent extends Document {
     driveUrl?: string;
     tag_en?: string;
     tag_ar?: string;
+    buttonText_en?: string;
+    buttonText_ar?: string;
   };
   updatedAt: Date;
 }
@@ -330,6 +332,8 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       driveUrl: { type: String, default: 'https://drive.google.com' },
       tag_en: { type: String, default: 'Exclusive Event Documentation' },
       tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
+      buttonText_en: { type: String, default: '26th Scientific Forum | From Coverage to Impact' },
+      buttonText_ar: { type: String, default: 'الملتقى العلمي 26 | من التغطية إلى الأثر' },
     },
   },
   {

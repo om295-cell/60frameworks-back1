@@ -96,6 +96,8 @@ let inMemoryContent: any = {
     driveUrl: 'https://drive.google.com/drive/folders/1Pxybwl41N4t3rHG4hZjudAYS17L_vCot',
     tag_en: 'Exclusive Event Documentation',
     tag_ar: 'ملف التوثيق والتغطية الحصرية',
+    buttonText_en: '26th Scientific Forum | From Coverage to Impact',
+    buttonText_ar: 'الملتقى العلمي 26 | من التغطية إلى الأثر',
   },
 };
 
