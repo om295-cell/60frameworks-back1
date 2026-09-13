@@ -13,7 +13,7 @@ let inMemoryContent: any = {
       'وكالة إبداعية عالمية تهندس أضخم القمم السيادية، وتفعيلات العلامات التجارية المتعددة الحواس، والبيئات المكانية الغامرة التي تعيد صياغة مفهوم التفاعل والتأثير.',
     backdropImage:
       'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2000&auto=format&fit=crop',
-    backdropVideo: '',
+    backdropVideo: 'https://spiubsxm2vg65sdm.public.blob.vercel-storage.com/hero-video-faststart.mp4',
     impactTitle_en: 'Our Impact in Numbers',
     impactTitle_ar: 'أثرنا بالأرقام',
     impactSubtitle_en: 'Because real impact… is measured.',
@@ -86,11 +86,14 @@ let inMemoryContent: any = {
       'Click the image below to view comprehensive coverage, high-definition captures, and documentation directly on Google Drive.',
     subtitle_ar:
       'انقر على الصورة للاطلاع على التغطية الشاملة، الصور التوثيقية، وملفات الفعالية مباشرة عبر Google Drive.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1600&auto=format&fit=crop',
-    videos: [],
-    videosMuted: false,
-    driveUrl: 'https://drive.google.com',
+    imageUrl: '',
+    videos: [
+      'https://spiubsxm2vg65sdm.public.blob.vercel-storage.com/event-video-1-faststart.mp4',
+      'https://spiubsxm2vg65sdm.public.blob.vercel-storage.com/event-video-2.mp4',
+      'https://spiubsxm2vg65sdm.public.blob.vercel-storage.com/event-video-3-faststart.mp4'
+    ],
+    videosMuted: true,
+    driveUrl: 'https://drive.google.com/drive/folders/1Pxybwl41N4t3rHG4hZjudAYS17L_vCot',
     tag_en: 'Exclusive Event Documentation',
     tag_ar: 'ملف التوثيق والتغطية الحصرية',
   },
