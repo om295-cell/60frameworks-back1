@@ -114,9 +114,41 @@ export const getContent = async (_req: Request, res: Response): Promise<void> =>
       }
     }
 
+    const contentObj: any = content.toObject ? content.toObject() : { ...content };
+
+    // Auto-heal any broken blob storage URLs or empty event videos
+    let needsDbUpdate = false;
+    const patchDoc: any = {};
+
+    if (!contentObj.hero?.backdropVideo || contentObj.hero.backdropVideo.includes('l8t8ykc5tfbkefrg')) {
+      contentObj.hero = {
+        ...contentObj.hero,
+        backdropVideo: inMemoryContent.hero.backdropVideo,
+      };
+      patchDoc['hero.backdropVideo'] = inMemoryContent.hero.backdropVideo;
+      needsDbUpdate = true;
+    }
+
+    if (!contentObj.latestEvent?.videos || contentObj.latestEvent.videos.length === 0 || contentObj.latestEvent.videos.some((v: string) => v.includes('l8t8ykc5tfbkefrg'))) {
+      contentObj.latestEvent = {
+        ...contentObj.latestEvent,
+        videos: inMemoryContent.latestEvent.videos,
+        driveUrl: inMemoryContent.latestEvent.driveUrl,
+      };
+      patchDoc['latestEvent.videos'] = inMemoryContent.latestEvent.videos;
+      patchDoc['latestEvent.driveUrl'] = inMemoryContent.latestEvent.driveUrl;
+      needsDbUpdate = true;
+    }
+
+    if (needsDbUpdate && contentObj._id) {
+      HomepageContent.updateOne({ _id: contentObj._id }, { $set: patchDoc }).catch((err) => {
+        console.warn('[AutoHeal] Background DB patch error:', err);
+      });
+    }
+
     res.status(200).json({
       success: true,
-      data: content,
+      data: contentObj,
     });
   } catch (error) {
     console.warn('Error fetching homepage content from DB, returning in-memory content:', error);
