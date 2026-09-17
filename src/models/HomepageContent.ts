@@ -469,7 +469,7 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
         default:
           'وكالة إبداعية عالمية تحول القمم والمؤتمرات الكبرى والأجنحة المعمارية والتدشينات إلى تجارب إنسانية استثنائية لا تُنسى.',
       },
-      email: { type: String, default: 'inquiries@impactagency.com' },
+      email: { type: String, default: 'hello@60frameworks.com' },
       phone: { type: String, default: '+966 55 307 7467' },
       whatsappUrl: { type: String, default: 'https://api.whatsapp.com/send/?phone=966553077467' },
       hubs_en: { type: String, default: 'Regional & Global Hubs: Riyadh • Dubai • London • New York' },
@@ -480,10 +480,10 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       youtubeUrl: { type: String, default: 'https://youtube.com' },
       navTitle_en: { type: String, default: 'Navigation' },
       navTitle_ar: { type: String, default: 'أقسام الموقع' },
-      expertiseTitle_en: { type: String, default: 'Expertise' },
+      expertiseTitle_en: { type: String, default: 'Areas of Expertise' },
       expertiseTitle_ar: { type: String, default: 'مجالات الخبرة' },
-      contactTitle_en: { type: String, default: 'Headquarters & Inquiries' },
-      contactTitle_ar: { type: String, default: 'المكاتب والتواصل' },
+      contactTitle_en: { type: String, default: 'Contact Us' },
+      contactTitle_ar: { type: String, default: 'تواصل معنا' },
       directBtnText_en: { type: String, default: 'Direct Inquiry' },
       directBtnText_ar: { type: String, default: 'طلب استشارة فورية' },
       copyright_en: {
@@ -503,12 +503,12 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       servicesList_en: {
         type: String,
         default:
-          'Event Strategy & Architecture\nEvent Management & Staging\nBrand Experiences & Reveals\nExhibitions & Custom Booths\nCorporate Summits & Galas\nCreative & 3D Spatial Visuals',
+          'Marketing & Media Campaigns\nContent Creation & Management\nVisual Production & Coverage\nBrand Experiences\nInfluencer Management\nEvents & Conferences\nBrand Identity & Creative Design\nVR & AR Technologies & Experiences',
       },
       servicesList_ar: {
         type: String,
         default:
-          'استراتيجية ورؤية الفعاليات\nإدارة وإنتاج الفعاليات الكبرى\nتجارب العلامات التجارية والتدشين\nالمعارض والأجنحة المعمارية\nالقمم المؤسسية والمؤتمرات السيادية\nالإبداع والسرد القصصي السينمائي',
+          'الحملات التسويقية والإعلامية\nصناعة وإدارة المحتوى\nالإنتاج المرئي والتغطيات\nتجارب العلامات التجارية\nإدارة المؤثرين\nالفعاليات والملتقيات\nبناء الهوية والتصميم الإبداعي\nتقنيات وتجارب الواقع الافتراضي والمعزز',
       },
     },
   },

@@ -131,7 +131,7 @@ let inMemoryContent: any = {
       'A global creative & experiential agency transforming corporate summits, pavilions, and brand revelations into unforgettable human experiences.',
     desc_ar:
       'وكالة إبداعية عالمية تحول القمم والمؤتمرات الكبرى والأجنحة المعمارية والتدشينات إلى تجارب إنسانية استثنائية لا تُنسى.',
-    email: 'inquiries@impactagency.com',
+    email: 'hello@60frameworks.com',
     phone: '+966 55 307 7467',
     whatsappUrl: 'https://api.whatsapp.com/send/?phone=966553077467',
     hubs_en: 'Regional & Global Hubs: Riyadh • Dubai • London • New York',
@@ -142,10 +142,10 @@ let inMemoryContent: any = {
     youtubeUrl: 'https://youtube.com',
     navTitle_en: 'Navigation',
     navTitle_ar: 'أقسام الموقع',
-    expertiseTitle_en: 'Expertise',
+    expertiseTitle_en: 'Areas of Expertise',
     expertiseTitle_ar: 'مجالات الخبرة',
-    contactTitle_en: 'Headquarters & Inquiries',
-    contactTitle_ar: 'المكاتب والتواصل',
+    contactTitle_en: 'Contact Us',
+    contactTitle_ar: 'تواصل معنا',
     directBtnText_en: 'Direct Inquiry',
     directBtnText_ar: 'طلب استشارة فورية',
     copyright_en: '60FRAMEWORKS Experiential Marketing Group. All rights reserved.',
@@ -157,9 +157,9 @@ let inMemoryContent: any = {
     termsText_ar: 'الشروط والأحكام',
     termsUrl: '#',
     servicesList_en:
-      'Event Strategy & Architecture\nEvent Management & Staging\nBrand Experiences & Reveals\nExhibitions & Custom Booths\nCorporate Summits & Galas\nCreative & 3D Spatial Visuals',
+      'Marketing & Media Campaigns\nContent Creation & Management\nVisual Production & Coverage\nBrand Experiences\nInfluencer Management\nEvents & Conferences\nBrand Identity & Creative Design\nVR & AR Technologies & Experiences',
     servicesList_ar:
-      'استراتيجية ورؤية الفعاليات\nإدارة وإنتاج الفعاليات الكبرى\nتجارب العلامات التجارية والتدشين\nالمعارض والأجنحة المعمارية\nالقمم المؤسسية والمؤتمرات السيادية\nالإبداع والسرد القصصي السينمائي',
+      'الحملات التسويقية والإعلامية\nصناعة وإدارة المحتوى\nالإنتاج المرئي والتغطيات\nتجارب العلامات التجارية\nإدارة المؤثرين\nالفعاليات والملتقيات\nبناء الهوية والتصميم الإبداعي\nتقنيات وتجارب الواقع الافتراضي والمعزز',
   },
 };
 
@@ -199,6 +199,34 @@ export const getContent = async (_req: Request, res: Response): Promise<void> =>
       };
       patchDoc['latestEvent.videos'] = inMemoryContent.latestEvent.videos;
       patchDoc['latestEvent.driveUrl'] = inMemoryContent.latestEvent.driveUrl;
+      needsDbUpdate = true;
+    }
+
+    // Auto-heal footer defaults
+    if (
+      !contentObj.footer ||
+      !contentObj.footer.email ||
+      contentObj.footer.email === 'inquiries@impactagency.com' ||
+      !contentObj.footer.servicesList_ar ||
+      !contentObj.footer.servicesList_ar.includes('الحملات التسويقية والإعلامية')
+    ) {
+      contentObj.footer = {
+        ...(contentObj.footer || {}),
+        email: 'hello@60frameworks.com',
+        contactTitle_ar: 'تواصل معنا',
+        contactTitle_en: 'Contact Us',
+        expertiseTitle_ar: 'مجالات الخبرة',
+        expertiseTitle_en: 'Areas of Expertise',
+        servicesList_ar: inMemoryContent.footer.servicesList_ar,
+        servicesList_en: inMemoryContent.footer.servicesList_en,
+      };
+      patchDoc['footer.email'] = 'hello@60frameworks.com';
+      patchDoc['footer.contactTitle_ar'] = 'تواصل معنا';
+      patchDoc['footer.contactTitle_en'] = 'Contact Us';
+      patchDoc['footer.expertiseTitle_ar'] = 'مجالات الخبرة';
+      patchDoc['footer.expertiseTitle_en'] = 'Areas of Expertise';
+      patchDoc['footer.servicesList_ar'] = inMemoryContent.footer.servicesList_ar;
+      patchDoc['footer.servicesList_en'] = inMemoryContent.footer.servicesList_en;
       needsDbUpdate = true;
     }
 
