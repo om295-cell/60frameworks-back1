@@ -41,6 +41,20 @@ export const getTheme = async (_req: Request, res: Response): Promise<void> => {
       merged.sections.whyUs.cardTextColor = '#FFFFFF';
     }
 
+    // Migrate legacy about light colors/cards to luxury dark
+    if (
+      merged.sections?.about &&
+      (merged.sections.about.backgroundColor === '#FFFFFF' ||
+        merged.sections.about.cardBackgroundColor === '#E6E7E8' ||
+        merged.sections.about.cardBackgroundColor === '#FFFFFF')
+    ) {
+      merged.sections.about.backgroundColor = '#1A1A1A';
+      merged.sections.about.textColor = '#FFFFFF';
+      merged.sections.about.subtitleColor = '#D1D5DB';
+      merged.sections.about.cardBackgroundColor = '#1F1F1F';
+      merged.sections.about.cardTextColor = '#FFFFFF';
+    }
+
     res.status(200).json({ success: true, data: merged });
   } catch (error) {
     console.warn('Error fetching theme from DB, returning in-memory theme:', error);

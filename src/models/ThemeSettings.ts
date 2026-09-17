@@ -76,7 +76,7 @@ export const DEFAULT_THEME_SETTINGS = {
   },
   sections: {
     hero: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
-    about: { backgroundColor: '#FFFFFF', textColor: '#242424', accentColor: '#F68621' },
+    about: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
     services: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
     clients: { backgroundColor: '#242424', textColor: '#FFFFFF', accentColor: '#F68621' },
     sectors: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
