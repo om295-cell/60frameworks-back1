@@ -126,6 +126,41 @@ let inMemoryContent: any = {
     buttonText_en: '26th Scientific Forum | From Coverage to Impact',
     buttonText_ar: 'الملتقى العلمي 26 | من التغطية إلى الأثر',
   },
+  footer: {
+    desc_en:
+      'A global creative & experiential agency transforming corporate summits, pavilions, and brand revelations into unforgettable human experiences.',
+    desc_ar:
+      'وكالة إبداعية عالمية تحول القمم والمؤتمرات الكبرى والأجنحة المعمارية والتدشينات إلى تجارب إنسانية استثنائية لا تُنسى.',
+    email: 'inquiries@impactagency.com',
+    phone: '+966 55 307 7467',
+    whatsappUrl: 'https://api.whatsapp.com/send/?phone=966553077467',
+    hubs_en: 'Regional & Global Hubs: Riyadh • Dubai • London • New York',
+    hubs_ar: 'المقرات الإقليمية والدولية: الرياض 🇸🇦 • دبي • لندن • نيويورك',
+    linkedinUrl: 'https://linkedin.com',
+    twitterUrl: 'https://twitter.com',
+    instagramUrl: 'https://instagram.com',
+    youtubeUrl: 'https://youtube.com',
+    navTitle_en: 'Navigation',
+    navTitle_ar: 'أقسام الموقع',
+    expertiseTitle_en: 'Expertise',
+    expertiseTitle_ar: 'مجالات الخبرة',
+    contactTitle_en: 'Headquarters & Inquiries',
+    contactTitle_ar: 'المكاتب والتواصل',
+    directBtnText_en: 'Direct Inquiry',
+    directBtnText_ar: 'طلب استشارة فورية',
+    copyright_en: '60FRAMEWORKS Experiential Marketing Group. All rights reserved.',
+    copyright_ar: 'مجموعة 60 فريمووركس للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
+    privacyText_en: 'Privacy Policy',
+    privacyText_ar: 'سياسة الخصوصية',
+    privacyUrl: '#',
+    termsText_en: 'Terms of Engagement',
+    termsText_ar: 'الشروط والأحكام',
+    termsUrl: '#',
+    servicesList_en:
+      'Event Strategy & Architecture\nEvent Management & Staging\nBrand Experiences & Reveals\nExhibitions & Custom Booths\nCorporate Summits & Galas\nCreative & 3D Spatial Visuals',
+    servicesList_ar:
+      'استراتيجية ورؤية الفعاليات\nإدارة وإنتاج الفعاليات الكبرى\nتجارب العلامات التجارية والتدشين\nالمعارض والأجنحة المعمارية\nالقمم المؤسسية والمؤتمرات السيادية\nالإبداع والسرد القصصي السينمائي',
+  },
 };
 
 export const getContent = async (_req: Request, res: Response): Promise<void> => {
@@ -221,6 +256,7 @@ export const updateContent = async (req: Request, res: Response): Promise<void> 
         ...req.body.latestEvent,
         videos: req.body.latestEvent?.videos ?? inMemoryContent.latestEvent.videos,
       },
+      footer: req.body.footer ? { ...inMemoryContent.footer, ...req.body.footer } : inMemoryContent.footer,
     };
 
     const updateDoc: any = {};
@@ -234,6 +270,7 @@ export const updateContent = async (req: Request, res: Response): Promise<void> 
     if (req.body.whyUs) updateDoc.whyUs = req.body.whyUs;
     if (req.body.finalCta) updateDoc.finalCta = req.body.finalCta;
     if (req.body.latestEvent) updateDoc.latestEvent = req.body.latestEvent;
+    if (req.body.footer) updateDoc.footer = req.body.footer;
 
     const content = await HomepageContent.findOneAndUpdate(
       {},

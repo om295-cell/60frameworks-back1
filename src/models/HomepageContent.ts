@@ -111,6 +111,37 @@ export interface IHomepageContent extends Document {
     buttonText_en?: string;
     buttonText_ar?: string;
   };
+  footer?: {
+    desc_en?: string;
+    desc_ar?: string;
+    email?: string;
+    phone?: string;
+    whatsappUrl?: string;
+    hubs_en?: string;
+    hubs_ar?: string;
+    linkedinUrl?: string;
+    twitterUrl?: string;
+    instagramUrl?: string;
+    youtubeUrl?: string;
+    navTitle_en?: string;
+    navTitle_ar?: string;
+    expertiseTitle_en?: string;
+    expertiseTitle_ar?: string;
+    contactTitle_en?: string;
+    contactTitle_ar?: string;
+    directBtnText_en?: string;
+    directBtnText_ar?: string;
+    copyright_en?: string;
+    copyright_ar?: string;
+    privacyText_en?: string;
+    privacyText_ar?: string;
+    privacyUrl?: string;
+    termsText_en?: string;
+    termsText_ar?: string;
+    termsUrl?: string;
+    servicesList_en?: string;
+    servicesList_ar?: string;
+  };
   updatedAt: Date;
 }
 
@@ -426,6 +457,59 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       tag_ar: { type: String, default: 'ملف التوثيق والتغطية الحصرية' },
       buttonText_en: { type: String, default: '26th Scientific Forum | From Coverage to Impact' },
       buttonText_ar: { type: String, default: 'الملتقى العلمي 26 | من التغطية إلى الأثر' },
+    },
+    footer: {
+      desc_en: {
+        type: String,
+        default:
+          'A global creative & experiential agency transforming corporate summits, pavilions, and brand revelations into unforgettable human experiences.',
+      },
+      desc_ar: {
+        type: String,
+        default:
+          'وكالة إبداعية عالمية تحول القمم والمؤتمرات الكبرى والأجنحة المعمارية والتدشينات إلى تجارب إنسانية استثنائية لا تُنسى.',
+      },
+      email: { type: String, default: 'inquiries@impactagency.com' },
+      phone: { type: String, default: '+966 55 307 7467' },
+      whatsappUrl: { type: String, default: 'https://api.whatsapp.com/send/?phone=966553077467' },
+      hubs_en: { type: String, default: 'Regional & Global Hubs: Riyadh • Dubai • London • New York' },
+      hubs_ar: { type: String, default: 'المقرات الإقليمية والدولية: الرياض 🇸🇦 • دبي • لندن • نيويورك' },
+      linkedinUrl: { type: String, default: 'https://linkedin.com' },
+      twitterUrl: { type: String, default: 'https://twitter.com' },
+      instagramUrl: { type: String, default: 'https://instagram.com' },
+      youtubeUrl: { type: String, default: 'https://youtube.com' },
+      navTitle_en: { type: String, default: 'Navigation' },
+      navTitle_ar: { type: String, default: 'أقسام الموقع' },
+      expertiseTitle_en: { type: String, default: 'Expertise' },
+      expertiseTitle_ar: { type: String, default: 'مجالات الخبرة' },
+      contactTitle_en: { type: String, default: 'Headquarters & Inquiries' },
+      contactTitle_ar: { type: String, default: 'المكاتب والتواصل' },
+      directBtnText_en: { type: String, default: 'Direct Inquiry' },
+      directBtnText_ar: { type: String, default: 'طلب استشارة فورية' },
+      copyright_en: {
+        type: String,
+        default: '60FRAMEWORKS Experiential Marketing Group. All rights reserved.',
+      },
+      copyright_ar: {
+        type: String,
+        default: 'مجموعة 60 فريمووركس للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
+      },
+      privacyText_en: { type: String, default: 'Privacy Policy' },
+      privacyText_ar: { type: String, default: 'سياسة الخصوصية' },
+      privacyUrl: { type: String, default: '#' },
+      termsText_en: { type: String, default: 'Terms of Engagement' },
+      termsText_ar: { type: String, default: 'الشروط والأحكام' },
+      termsUrl: { type: String, default: '#' },
+      servicesList_en: {
+        type: String,
+        default:
+          'Event Strategy & Architecture\nEvent Management & Staging\nBrand Experiences & Reveals\nExhibitions & Custom Booths\nCorporate Summits & Galas\nCreative & 3D Spatial Visuals',
+      },
+      servicesList_ar: {
+        type: String,
+        default:
+          'استراتيجية ورؤية الفعاليات\nإدارة وإنتاج الفعاليات الكبرى\nتجارب العلامات التجارية والتدشين\nالمعارض والأجنحة المعمارية\nالقمم المؤسسية والمؤتمرات السيادية\nالإبداع والسرد القصصي السينمائي',
+      },
     },
   },
   {
