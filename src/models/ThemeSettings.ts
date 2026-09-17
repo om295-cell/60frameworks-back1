@@ -81,7 +81,7 @@ export const DEFAULT_THEME_SETTINGS = {
     clients: { backgroundColor: '#242424', textColor: '#FFFFFF', accentColor: '#F68621' },
     sectors: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
     caseStudies: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
-    whyUs: { backgroundColor: '#FFFFFF', textColor: '#242424', accentColor: '#F68621' },
+    whyUs: { backgroundColor: '#141414', textColor: '#FFFFFF', accentColor: '#F68621' },
     testimonials: { backgroundColor: '#1A1A1A', textColor: '#FFFFFF', accentColor: '#F68621' },
     finalCta: { backgroundColor: '#F68621', textColor: '#FFFFFF', accentColor: '#FFFFFF' },
     latestEvent: { backgroundColor: '#FFFFFF', textColor: '#0B0F19', subtitleColor: '#5A6275', accentColor: '#F68621', cardBackgroundColor: '#0A0F1D', cardTextColor: '#FFFFFF' },

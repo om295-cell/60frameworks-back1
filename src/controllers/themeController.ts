@@ -27,6 +27,20 @@ export const getTheme = async (_req: Request, res: Response): Promise<void> => {
       },
     };
 
+    // Migrate legacy whyUs light colors to luxury dark
+    if (
+      merged.sections?.whyUs &&
+      (merged.sections.whyUs.backgroundColor === '#FFFFFF' ||
+        merged.sections.whyUs.backgroundColor === '#FAFAFA' ||
+        merged.sections.whyUs.backgroundColor === '#F8F9FA')
+    ) {
+      merged.sections.whyUs.backgroundColor = '#141414';
+      merged.sections.whyUs.textColor = '#FFFFFF';
+      merged.sections.whyUs.subtitleColor = '#D1D5DB';
+      merged.sections.whyUs.cardBackgroundColor = '#1F1F1F';
+      merged.sections.whyUs.cardTextColor = '#FFFFFF';
+    }
+
     res.status(200).json({ success: true, data: merged });
   } catch (error) {
     console.warn('Error fetching theme from DB, returning in-memory theme:', error);
