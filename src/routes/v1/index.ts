@@ -11,6 +11,7 @@ import uploadRoutes from './uploadRoutes.js';
 import themeRoutes from './themeRoutes.js';
 import adminUserRoutes from './adminUserRoutes.js';
 import auditLogRoutes from './auditLogRoutes.js';
+import translateRoutes from './translateRoutes.js';
 
 const router = Router();
 
@@ -26,5 +27,6 @@ router.use('/upload', uploadRoutes);
 router.use('/theme', themeRoutes);
 router.use('/admin-users', adminUserRoutes);
 router.use('/audit-logs', auditLogRoutes);
+router.use('/translate', translateRoutes);
 
 export default router;
