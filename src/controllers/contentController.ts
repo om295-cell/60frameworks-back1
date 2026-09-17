@@ -64,6 +64,32 @@ let inMemoryContent: any = {
     badgeTitle_ar: 'مسؤولية تنفيذية شاملة 100%',
     badgeDesc_en: 'Concept, spatial build, AV, showrunning & post-event audit under one roof.',
     badgeDesc_ar: 'الفكرة، البناء المعماري، الصوت والضوء، الإخراج، والتدقيق تحت سقف واحد.',
+    pillars: [
+      {
+        title_en: 'Experience-First Architecture',
+        title_ar: 'هندسة ترتكز على التجربة الإنسانية',
+        desc_en: 'We do not view events as logistical schedules; we engineer holistic emotional journeys where every spatial, acoustic, and visual cue commands attention.',
+        desc_ar: 'لا نرى الفعاليات مجرد جداول لوجستية؛ بل نهندس رحلات عاطفية متكاملة تأسر الحواس عبر كل تفصيلة مكانية وصوتية وبصرية.',
+      },
+      {
+        title_en: 'Story-Driven Narrative Craft',
+        title_ar: 'سرد قصصي سينمائي ملهم',
+        desc_en: 'Grand visuals without narrative depth fade quickly. We build cinematic story arcs that connect product capabilities directly with human aspirations.',
+        desc_ar: 'المشاهد البصرية الكبرى تتلاشى بدون عمق قصصي. نبني حبكات ملهمة تربط قدرات علامتك التجارية بطموحات الجمهور وتطلعاته.',
+      },
+      {
+        title_en: 'Lasting Moments & Tangible ROI',
+        title_ar: 'أثر مستدام وعائد استثماري ملموس',
+        desc_en: 'Our work generates monumental earned media, high-intent investor deals, and institutional memorability that resonates long after stage lights fade.',
+        desc_ar: 'تحقق فعالياتنا زخماً إعلامياً واسعاً، وصفقات استثمارية كبرى، ومكانة مؤسسية راسخة تدوم لأعوام.',
+      },
+      {
+        title_en: 'Sovereign Protocol & B2B/B2G Mastery',
+        title_ar: 'إتقان البروتوكول السيادي ومراسم الوفود',
+        desc_en: 'Deep diplomatic competence, high-security orchestration, and VIP delegation protocol compliance trusted by sovereign leaders and multinational chairpersons.',
+        desc_ar: 'كفاءة دبلوماسية عميقة، وإدارة أمنية عالية المستوى، والتزام صارم ببروتوكول الوفود الرسمية المعتمد لدى القيادات وصناع القرار.',
+      },
+    ],
   },
   finalCta: {
     eyebrow_en: 'START YOUR NEXT DEFINING MOMENT',
