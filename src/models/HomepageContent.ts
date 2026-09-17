@@ -69,6 +69,8 @@ export interface IHomepageContent extends Document {
     eyebrow_en?: string; eyebrow_ar?: string;
     heading_en?: string; heading_ar?: string;
     subtitle_en?: string; subtitle_ar?: string;
+    capabilitiesHeading_en?: string; capabilitiesHeading_ar?: string;
+    ctaText_en?: string; ctaText_ar?: string;
   };
   caseStudies?: {
     eyebrow_en?: string; eyebrow_ar?: string;
@@ -290,6 +292,10 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       heading_ar: { type: String, default: 'خبرة قطاعية عميقة تواكب متطلبات المجالات الحساسة.' },
       subtitle_en: { type: String, default: 'Each industry commands specific protocol, visual language, and attendee dynamics. Our vertical-specific teams bring decades of specialized execution.' },
       subtitle_ar: { type: String, default: 'كل قطاع يتميز ببروتوكوله الخاص، ولغته البصرية، وديناميكية جمهوره. توفر فرقنا المتخصصة عقوداً من الخبرة التنفيذية في المملكة والمنطقة.' },
+      capabilitiesHeading_en: { type: String, default: 'Key Domain Capabilities' },
+      capabilitiesHeading_ar: { type: String, default: 'أبرز القدرات التنفيذية في القطاع' },
+      ctaText_en: { type: String, default: '' },
+      ctaText_ar: { type: String, default: '' },
     },
     caseStudies: {
       eyebrow_en: { type: String, default: 'FEATURED CASE STUDIES & STORIES' },

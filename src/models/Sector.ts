@@ -6,8 +6,13 @@ export interface ISector extends Document {
   slug: string;
   description: string;
   description_ar: string;
+  capabilitiesTitle?: string;
+  capabilitiesTitle_ar?: string;
   capabilities: string[];
   capabilities_ar: string[];
+  buttonText?: string;
+  buttonText_ar?: string;
+  buttonLink?: string;
   imageUrl: string;
   videoUrl?: string;
   icon: string;
@@ -23,8 +28,13 @@ const SectorSchema = new Schema<ISector>(
     slug: { type: String, required: true, unique: true, index: true, lowercase: true, trim: true },
     description: { type: String, required: true },
     description_ar: { type: String, default: '' },
+    capabilitiesTitle: { type: String, default: '' },
+    capabilitiesTitle_ar: { type: String, default: '' },
     capabilities: [{ type: String, required: true }],
     capabilities_ar: [{ type: String }],
+    buttonText: { type: String, default: '' },
+    buttonText_ar: { type: String, default: '' },
+    buttonLink: { type: String, default: '' },
     imageUrl: { type: String, required: true },
     videoUrl: { type: String, default: '' },
     icon: { type: String, required: true },
