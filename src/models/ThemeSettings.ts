@@ -94,7 +94,7 @@ export const DEFAULT_THEME_SETTINGS = {
     { id: 'clients', name: 'Trusted Clients', name_ar: 'عملاؤنا وشركاؤنا', enabled: true, order: 5 },
     { id: 'sectors', name: 'Industry Sectors', name_ar: 'القطاعات التخصصية', enabled: true, order: 6 },
     { id: 'caseStudies', name: 'Case Studies / Stories', name_ar: 'أبرز الأعمال والفعاليات', enabled: true, order: 7 },
-    { id: 'whyUs', name: 'Why 60FRAMEWORKS', name_ar: 'لماذا 60 فريمووركس', enabled: true, order: 8 },
+    { id: 'whyUs', name: 'Why 60FRAMEWORKS', name_ar: 'لماذا 60 إطارًا', enabled: true, order: 8 },
     { id: 'testimonials', name: 'Testimonials & Impact', name_ar: 'آراء وتقييمات القادة', enabled: true, order: 9 },
     { id: 'finalCta', name: 'Final Call to Action', name_ar: 'دعوة للتواصل والشراكة', enabled: true, order: 10 },
   ],

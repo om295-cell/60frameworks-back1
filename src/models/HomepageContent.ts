@@ -295,7 +295,7 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
     },
     whyUs: {
       eyebrow_en: { type: String, default: 'WHY WORK WITH 60FRAMEWORKS' },
-      eyebrow_ar: { type: String, default: 'لماذا تختار 60 فريمووركس' },
+      eyebrow_ar: { type: String, default: 'لماذا تختار 60 إطارًا' },
       heading_en: {
         type: String,
         default: 'Where Uncompromising Strategy Meets Creative Audacity.',
@@ -492,7 +492,7 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
       },
       copyright_ar: {
         type: String,
-        default: 'مجموعة 60 فريمووركس للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
+        default: 'مجموعة 60 إطارًا للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
       },
       privacyText_en: { type: String, default: 'Privacy Policy' },
       privacyText_ar: { type: String, default: 'سياسة الخصوصية' },

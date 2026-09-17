@@ -50,7 +50,7 @@ let inMemoryContent: any = {
   },
   whyUs: {
     eyebrow_en: 'WHY WORK WITH 60FRAMEWORKS',
-    eyebrow_ar: 'لماذا تختار 60 فريمووركس',
+    eyebrow_ar: 'لماذا تختار 60 إطارًا',
     heading_en: 'Where Uncompromising Strategy Meets Creative Audacity.',
     heading_ar: 'حيث تلتقي الاستراتيجية الدقيقة بالجرأة الإبداعية.',
     subtitle_en:
@@ -149,7 +149,7 @@ let inMemoryContent: any = {
     directBtnText_en: 'Direct Inquiry',
     directBtnText_ar: 'طلب استشارة فورية',
     copyright_en: '60FRAMEWORKS Experiential Marketing Group. All rights reserved.',
-    copyright_ar: 'مجموعة 60 فريمووركس للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
+    copyright_ar: 'مجموعة 60 إطارًا للتسويق التجريبي والفعاليات. جميع الحقوق محفوظة.',
     privacyText_en: 'Privacy Policy',
     privacyText_ar: 'سياسة الخصوصية',
     privacyUrl: '#',
@@ -227,6 +227,17 @@ export const getContent = async (_req: Request, res: Response): Promise<void> =>
       patchDoc['footer.expertiseTitle_en'] = 'Areas of Expertise';
       patchDoc['footer.servicesList_ar'] = inMemoryContent.footer.servicesList_ar;
       patchDoc['footer.servicesList_en'] = inMemoryContent.footer.servicesList_en;
+      needsDbUpdate = true;
+    }
+
+    if (contentObj.whyUs?.eyebrow_ar && contentObj.whyUs.eyebrow_ar.includes('60 فريمووركس')) {
+      contentObj.whyUs.eyebrow_ar = contentObj.whyUs.eyebrow_ar.replace(/60 فريمووركس/g, '60 إطارًا');
+      patchDoc['whyUs.eyebrow_ar'] = contentObj.whyUs.eyebrow_ar;
+      needsDbUpdate = true;
+    }
+    if (contentObj.footer?.copyright_ar && contentObj.footer.copyright_ar.includes('60 فريمووركس')) {
+      contentObj.footer.copyright_ar = contentObj.footer.copyright_ar.replace(/60 فريمووركس/g, '60 إطارًا');
+      patchDoc['footer.copyright_ar'] = contentObj.footer.copyright_ar;
       needsDbUpdate = true;
     }
 
