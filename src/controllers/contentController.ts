@@ -60,10 +60,11 @@ let inMemoryContent: any = {
     image:
       'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop',
     videoUrl: '',
-    badgeTitle_en: '100% End-to-End Accountability',
-    badgeTitle_ar: 'مسؤولية تنفيذية شاملة 100%',
-    badgeDesc_en: 'Concept, spatial build, AV, showrunning & post-event audit under one roof.',
-    badgeDesc_ar: 'الفكرة، البناء المعماري، الصوت والضوء، الإخراج، والتدقيق تحت سقف واحد.',
+    badgeValue: '360°',
+    badgeTitle_en: '360° Integrated Solutions',
+    badgeTitle_ar: 'حلول متكاملة',
+    badgeDesc_en: 'Strategy, creativity, content, production & execution; a seamless journey from concept to impact measurement.',
+    badgeDesc_ar: 'استراتيجية، إبداع، محتوى، إنتاج وتنفيذ؛ تجربة متكاملة من الفكرة حتى قياس الأثر',
     pillars: [
       {
         title_en: 'Experience-First Architecture',

@@ -46,6 +46,7 @@ export interface IHomepageContent extends Document {
     subtitle_ar: string;
     image: string;
     videoUrl?: string;
+    badgeValue?: string;
     badgeTitle_en: string;
     badgeTitle_ar: string;
     badgeDesc_en: string;
@@ -288,15 +289,16 @@ const HomepageContentSchema = new Schema<IHomepageContent>(
           'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop',
       },
       videoUrl: { type: String, default: '' },
-      badgeTitle_en: { type: String, default: '100% End-to-End Accountability' },
-      badgeTitle_ar: { type: String, default: 'مسؤولية تنفيذية شاملة 100%' },
+      badgeValue: { type: String, default: '360°' },
+      badgeTitle_en: { type: String, default: '360° Integrated Solutions' },
+      badgeTitle_ar: { type: String, default: 'حلول متكاملة' },
       badgeDesc_en: {
         type: String,
-        default: 'Concept, spatial build, AV, showrunning & post-event audit under one roof.',
+        default: 'Strategy, creativity, content, production & execution; a seamless journey from concept to impact measurement.',
       },
       badgeDesc_ar: {
         type: String,
-        default: 'الفكرة، البناء المعماري، الصوت والضوء، الإخراج، والتدقيق تحت سقف واحد.',
+        default: 'استراتيجية، إبداع، محتوى، إنتاج وتنفيذ؛ تجربة متكاملة من الفكرة حتى قياس الأثر',
       },
       pillars: {
         type: [
